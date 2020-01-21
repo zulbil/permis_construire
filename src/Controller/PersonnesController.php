@@ -297,6 +297,11 @@ class PersonnesController extends AbstractController
     public function editPersonne(int $id, Request $request) {
 
         $personne   =   $this->entityManager->getRepository(Personne::class)->find($id);
+        /*$adresse    =   $this->entityManager
+                        ->getRepository(Adresse::class)
+                        ->findOneBy(['personne' => $personne ]);
+                        //->getMainAdresse($personne);*/
+
         $data   =   array();
 
         $form   = $this->createForm(PersonneType::class, $personne);
@@ -310,8 +315,9 @@ class PersonnesController extends AbstractController
             $personne   = $form->getData();
             $date_naissance = new \DateTime($form->get('date_de_naissance')->getData());
             $personne->setDateDeNaissance($date_naissance);
-            //var_dump($personne); exit();
             $personne->setUtilisateur($this->user);
+
+            $adresse    =   new Adresse();
             $this->entityManager->persist($personne);
             $this->entityManager->flush();
 
