@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ page }} {% endblock %}
+
+{% block body %}
+    <div class="kt-portlet">
+        <div class="kt-portlet__body">
+            <div class="row">
+            <div class="col-lg-8">
+                {% if fonctions %}
+                    {% if fonctions|length > 0 %}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom de la profession</th>
+                                <th> Action </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for fonction in fonctions %}
+                                <tr>
+                                    <td>{{ fonction.id }}</td>
+                                    <td>{{ fonction.nom }}</td>
+                                    <td>
+                                        <a title="Edit details" data-id="{{ fonction.id }}" data-nom="{{ fonction.nom }}" class="btn btn-sm btn-clean btn-icon btn-icon-md edit-btn">
+                                            <i class="la la-edit"></i>
+                                        </a>
+                                        <a title="Delete" class="btn btn-sm btn-clean btn-icon btn-icon-md btn-remove" data-id="{{ fonction.id }}">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-outline-danger fade show" role="alert">
+                            <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+                            <div class="alert-text">Aucune fonction n'a été ajouté</div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-lg-4">
+                <div class="add-fonction">
+                    <h3> Ajouter une fonction</h3>
+                    {{ form(form) }}
+                </div>
+                <div class="edit-fonction">
+                    <h3> Editer la fonction </h3>
+                    {{ form(edit_form) }}
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

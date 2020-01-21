@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des Personnes {% endblock %}
+
+{% block body %}
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label"></div>
+            <div class="kt-portlet__head-toolbar">
+                <a href="{{ path('ajouter_personne') }}">
+                    <div class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-next">
+                        <i class="flaticon2-plus"></i>  Ajouter une personne
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="kt-portlet__body kt-portlet__body--fit">
+            <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 pl-5">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="row align-items-center">
+                            <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                <div class="kt-input-icon kt-input-icon--left">
+                                    <input type="text" class="form-control" placeholder="Recherche..." id="generalSearch" maxlength="10">
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--left">
+							            <span><i class="la la-search"></i></span>
+						            </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+                                <div class="kt-form__group kt-form__group--inline">
+                                    <div class="kt-form__label">
+                                        <label>Type:</label>
+                                    </div>
+                                    <div class="kt-form__control">
+                                        <div class="dropdown bootstrap-select form-control">
+                                            <select class="form-control bootstrap-select selectpicker" id="kt_form_type" tabindex="-98">
+                                                <option value="">Tous</option>
+                                                <option value="physique">Personne Physique</option>
+                                                <option value="morale">Personne Morale</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
+                        <a href="#" class="btn btn-default kt-hidden">
+                            <i class="la la-cart-plus"></i> New Order
+                        </a>
+                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="kt_datatable" class="mt-5"></div>
+
+            <div class="modal fade bd-example-modal-lg" id="detailsBox" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="title"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="kt-form kt-form--label-right detail-container">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{
+  "name": "permis_construire",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "symfony"
+  ],
+  "author": "Joel Alexandre Khang Zulbal",
+  "license": "MIT",
+  "dependencies": {
+    "bootbox": "^5.3.4",
+    "datatables.net": "^1.10.20",
+    "datatables.net-dt": "^1.10.20",
+    "intl-tel-input": "^16.0.8"
+  }
+}

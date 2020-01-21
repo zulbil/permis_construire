@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="description" content="Iconbox examples">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!--begin::Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">        <!--end::Fonts -->
+        <!--begin::Global Theme Styles(used by all pages) -->
+        <link rel="stylesheet" href="{{ asset('node_modules/datatables.net-dt/css/jquery.dataTables.min.css') }}">
+        <link href="{{ asset("plugins/global/plugins.bundle.css") }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset("css/style.bundle.css") }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('node_modules/intl-tel-input/build/css/intlTelInput.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css">
+        <link rel="shortcut icon" href="{{ asset("media/logos/favicon.ico")}}" />
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="kt-page--loading-enabled kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header--minimize-menu kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--left kt-aside--fixed">
+        <div class="loader">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        {{ include('inc/header-mobile.html.twig') }}
+        <div class="kt-grid kt-grid--hor kt-grid--root">
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+                    {{ include('inc/header.html.twig') }}
+                    <!-- Begin Aside -->
+                    <button class="kt-aside-close " id="kt_aside_close_btn"><i class="la la-close"></i></button>
+                    <div class="kt-aside kt-aside--fixed kt-grid__item kt-grid kt-grid--desktop kt-grid--hor-desktop" id="kt_aside">
+                        <!-- begin:: Aside Menu -->
+                        <div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
+                            <div id="kt_aside_menu" class="kt-aside-menu kt-scroll ps ps--active-y" data-ktmenu-vertical="1" data-ktmenu-scroll="1" style="height: 206px; overflow: hidden;">
+
+                                <ul class="kt-menu__nav ">
+                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/builder.html" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-cog"></i><span class="kt-menu__link-text">Layout Builder</span></a></li><li class="kt-menu__section ">
+                                        <h4 class="kt-menu__section-text">Components</h4>
+                                        <i class="kt-menu__section-icon flaticon-more-v2"></i>
+                                    </li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-database"></i><span class="kt-menu__link-text">Datatables</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-cube"></i><span class="kt-menu__link-text">Buttons</span></a></li><li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon fa fa-dolly"></i><span class="kt-menu__link-text">Portlets</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a><div class="kt-menu__submenu "><span class="kt-menu__arrow"></span><ul class="kt-menu__subnav"><li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Portlets</span></span></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Block UI</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Perfect Scroll</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Toastr</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">SweetAlert2</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Session Timeout</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Idle Timer</span></a></li></ul></div></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-fill"></i><span class="kt-menu__link-text">Timeline</span></a></li><li class="kt-menu__section ">
+                                        <h4 class="kt-menu__section-text">Page Elements</h4>
+                                        <i class="kt-menu__section-icon flaticon-more-v2"></i>
+                                    </li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-images"></i><span class="kt-menu__link-text">Widgets</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-layer-group"></i><span class="kt-menu__link-text">Calendars</span></a></li><li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon fa fa-table"></i><span class="kt-menu__link-text">Prising Tables</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a><div class="kt-menu__submenu "><span class="kt-menu__arrow"></span><ul class="kt-menu__subnav"><li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Prising Tables</span></span></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Base</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="/metronic/preview/demo9/#.html" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">Draggable</span></a></li></ul></div></li><li class="kt-menu__item " aria-haspopup="true"><a href="javascript:;" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-poll"></i><span class="kt-menu__link-text">Invoice</span></a></li><li class="kt-menu__item " aria-haspopup="true"><a href="javascript:;" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-coins"></i><span class="kt-menu__link-text">Custom Pages</span></a></li>			</ul>
+                                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 206px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 71px;"></div></div></div>
+                        </div>
+                        <!-- end:: Aside Menu -->
+                    </div>
+                    <!-- End Aside -->
+                    <!-- Begin Body -->
+                    <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+                        <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+                            <!-- Sub Header -->
+                            {{ include('inc/subheader.html.twig') }}
+                            <!-- End Sub Header -->
+                            <!-- Begin Content -->
+                            <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+                                {% block body %}{% endblock %}
+                            </div>
+                            <!-- End Content -->
+                        </div>
+                    </div>
+                    <!-- End Body -->
+                    <!-- Begin Footer -->
+                    <div class="kt-footer kt-grid__item" id="kt_footer">
+                        <div class="kt-container ">
+                            <div class="kt-footer__wrapper">
+                                <div class="kt-footer__copyright">
+                                    2019&nbsp;©&nbsp;<a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Keenthemes</a>
+                                </div>
+                                <div class="kt-footer__menu">
+                                    <a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">About</a>
+                                    <a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Team</a>
+                                    <a href="http://keenthemes.com/metronic" target="_blank" class="kt-link">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Footer -->
+                </div>
+            </div>
+        </div>
+        <div id="kt_scrolltop" class="kt-scrolltop">
+            <i class="fa fa-arrow-up"></i>
+        </div>
+        {% block javascripts %}{% endblock %}
+        <script>
+            var KTAppOptions = {"colors":{"state":{"brand":"#591df1","light":"#ffffff","dark":"#282a3c","primary":"#5867dd","success":"#34bfa3","info":"#36a3f7","warning":"#ffb822","danger":"#fd3995"},"base":{"label":["#c5cbe3","#a1a8c3","#3d4465","#3e4466"],"shape":["#f0f3ff","#d9dffa","#afb4d4","#646c9a"]}}};
+        </script>
+        <script src="{{ asset("plugins/global/plugins.bundle.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("js/scripts.bundle.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("node_modules/intl-tel-input/build/js/intlTelInput.js") }}" type="text/javascript"></script>
+        <script src="{{ asset('node_modules/bootbox/dist/bootbox.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('node_modules/bootbox/dist/bootbox.locales.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('node_modules/datatables.net/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset("js/jquery.validate.min.js") }}" type="text/javascript"></script>
+        <script src="{{ asset("js/app.js") }}" type="text/javascript"></script>
+    </body>
+</html>

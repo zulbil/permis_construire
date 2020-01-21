@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ page }} {% endblock %}
+
+{% block body %}
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label"></div>
+            <div class="kt-portlet__head-toolbar">
+                <a href="{{ path('ajouter_personne_physique') }}">
+                    <div class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-next">
+                        Ajouter une personne physique
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="kt-portlet__body kt-portlet__body--fit">
+
+            <div id="kt_datatable"></div>
+            {#{% if personnes_physiques|length > 0 %}
+                <table class="table" id="table-personnes-physiques">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Postnom</th>
+                            <th>Prénom</th>
+                            <th>Etat Civil</th>
+                            <th>Lieu de Naissance</th>
+                            <th>Date de Naissance</th>
+                            <th>Nationalité</th>
+                            <th>Email</th>
+                            <th>Fonction</th>
+                            <th>NIF</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for personne in personnes_physiques %}
+                        <tr>
+                            <td> {{ personne.nom }}</td>
+                            <td> {{ personne.postnom }}</td>
+                            <td> {{ personne.prenom }}</td>
+                            <td> {{ personne.etat_civil }}</td>
+                            <td> {{ personne.lieu_de_naissance }}</td>
+                            <td> {{ personne.date_de_naissance | date("d/m/Y") }}</td>
+                            <td> {{ personne.nationalite }}</td>
+                            <td> {{ personne.email }}</td>
+                            <td> {{ personne.fonction.nom }}</td>
+                            <td>
+                                {% if personne.nif %}
+                                    <span class="btn btn-bold btn-sm btn-font-sm btn-label-success">{{ personne.nif }}</span>
+                                {% else %}
+                                    <span class="btn btn-bold btn-sm btn-font-sm  btn-label-danger">Non fourni</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="kt-widget2__actions">
+                                    <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="flaticon-more-1"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
+                                        <ul class="kt-nav">
+                                            <li class="kt-nav__item">
+                                                <a href="{{ path('editer_personne_physique', { id: personne.id }) }}" class="kt-nav__link">
+                                                    <i class="kt-nav__link-icon flaticon2-contract"></i>
+                                                    <span class="kt-nav__link-text">Editer</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-nav__item">
+                                                <a href="#" class="kt-nav__link btn-remove-physique" data-personne-id="{{ personne.id }}">
+                                                    <i class="kt-nav__link-icon flaticon2-trash"></i>
+                                                    <span class="kt-nav__link-text">Supprimer</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}#}
+        </div>
+    </div>
+{% endblock %}

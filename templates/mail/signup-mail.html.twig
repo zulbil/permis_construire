@@ -1,0 +1,74 @@
+{% apply inline_css %}
+
+    <style>
+        h1 {
+            color: black;
+            font-weight: bold;
+        }
+        .btn-brand:hover {
+            color: #fff;
+            background-color: #3758ff;
+            border-color: #2a4eff;
+        }
+        .btn.btn-brand.btn-elevate {
+            -webkit-box-shadow: 0 4px 16px 0 rgba(93,120,255,.15);
+            box-shadow: 0 4px 16px 0 rgba(93,120,255,.15);
+        }
+        .btn.btn-brand.btn-elevate.active, .btn.btn-brand.btn-elevate:active, .btn.btn-brand.btn-elevate:focus, .btn.btn-brand.btn-elevate:hover, .show>.btn.btn-brand.btn-elevate {
+            -webkit-box-shadow: 0 9px 16px 0 rgba(93, 120, 255, .25) !important;
+            box-shadow: 0 9px 16px 0 rgba(93, 120, 255, .25) !important;
+        }
+        .btn {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+        .btn-brand {
+            color: #fff;
+            background-color: #5d78ff;
+            border-color: #5d78ff;
+            color: #fff;
+        }
+        btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: .65rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+        }
+        .kt-login.kt-login--v3 .kt-login__wrapper .kt-login__container .kt-form .kt-login__actions .kt-login__btn-primary, .kt-login.kt-login--v3 .kt-login__wrapper .kt-login__container .kt-form .kt-login__actions .kt-login__btn-secondary {
+            height: 50px;
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+        }
+
+    </style>
+
+    <h1>Bienvenue {{ user.username }}  !</h1>
+
+    <p>Vous vous êtes inscrit avec le mail : <strong>{{ user.email }}</strong></p>
+    <p>
+        Votre code de validation est : <strong> {{ code }} </strong>
+    </p>
+    <p>
+        {% if app.environment == "dev" %}
+            <a href="http://localhost:8000/activation/utilisateur/{{ user.id }}" target="_blank">Cliquez ici pour activez votre compte </a>
+        {% else %}
+            <a class="btn btn-brand btn-elevate kt-login__btn-primary" href="{{ host }}/activation/utilisateur/{{ user.id }}" target="_blank">Cliquez ici pour activez votre compte </a>
+        {% endif %}
+    </p>
+{% endapply %}
