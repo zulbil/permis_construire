@@ -297,30 +297,66 @@ class PersonnesController extends AbstractController
     public function editPersonne(int $id, Request $request) {
 
         $personne   =   $this->entityManager->getRepository(Personne::class)->find($id);
-        /*$adresse    =   $this->entityManager
-                        ->getRepository(Adresse::class)
-                        ->findOneBy(['personne' => $personne ]);
-                        //->getMainAdresse($personne);*/
+
+        $adresse    =   $this->entityManager->getRepository(Adresse::class)->getMainAdresse($personne);
+
+        $adresse_obj = null;
 
         $data   =   array();
 
         $form   = $this->createForm(PersonneType::class, $personne);
+
+        if ($adresse) {
+            $form->get('fk_entite')->setData($adresse['fk_entite']);
+            $form->get('numero')->setData($adresse['numero']);
+            $id = $adresse['adresse_id'];
+            $adresse_obj    =  $this->entityManager->getRepository(Adresse::class)->find($id);
+        }
 
         $data['page']   =   'Editer une Personne';
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // ajout d'une nouvelle personne
-            $personne   = $form->getData();
+            // Modification d'une personne
+            $personne       = $form->getData();
             $date_naissance = new \DateTime($form->get('date_de_naissance')->getData());
             $personne->setDateDeNaissance($date_naissance);
             $personne->setUtilisateur($this->user);
 
-            $adresse    =   new Adresse();
+            $new_adresse    =   null;
+            $adresse_to_register = null;
+            // Test s'il existe une adresse assignée à cette personne
+            if ($adresse) {
+                $id = $adresse['adresse_id'];
+                $adresse_obj    =  $this->entityManager->getRepository(Adresse::class)->find($id);
+                $adresse_obj->setEtat(1);
+                $adresse_obj->setParDefaut(1);
+                $adresse_obj->setAdresseComplete($form->get('adresse')->getData());
+                $adresse_obj->setNumero($form->get('numero')->getData());
+                $fk_entite = $form->get('fk_entite')->getData();
+                $entite_admin = $this->entityManager->getRepository(TEntiteAdministrative::class)->find($fk_entite);
+                $adresse_obj->setFkEntite($entite_admin);
+                $adresse_to_register = $adresse_obj;
+            } else {
+                $new_adresse        =   new Adresse();
+                $new_adresse->setEtat(1);
+                $new_adresse->setParDefaut(1);
+                $new_adresse->setAdresseComplete($form->get('adresse')->getData());
+                $numero = $form->get('numero')->getData();
+                if ($numero) {
+                    $new_adresse->setNumero($numero);
+                }
+                $fk_entite = $form->get('fk_entite')->getData();
+                $entite_admin = $this->entityManager->getRepository(TEntiteAdministrative::class)->find($fk_entite);
+                $new_adresse->setFkEntite($entite_admin);
+                $new_adresse->addPersonne($personne);
+                $adresse_to_register = $new_adresse;
+            }
             $this->entityManager->persist($personne);
-            $this->entityManager->flush();
+            $this->entityManager->persist($adresse_to_register);
 
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('les_personnes');
         }

@@ -52,17 +52,27 @@ class AdresseRepository extends ServiceEntityRepository
      * @param Personne $personne
      * @return mixed
      * Cette fonction permet de récuperer une adresse principale selon la personne fournie
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getMainAdresse(Personne $personne) {
 
-        $qb     =    $this->createQueryBuilder('a')
-                          ->andWhere('a.personne = :personne')
-                          ->setParameter('personne', $personne)
-                          /*->andWhere('a.par_defaut = :defaut')
-                          ->setParameter('defaut', 1)*/
-                          ->getQuery();
+        $conn = $this->getEntityManager()->getConnection();
 
-        return $qb->execute();
+        $sql    =   '
+            SELECT *
+            FROM adresse a
+            INNER JOIN adresse_personne ap  ON  
+            a.id = ap.adresse_id
+            WHERE ap.personne_id = :personne_id
+            AND  a.par_defaut = 1
+        ';
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute(['personne_id' => $personne->getId() ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetch();
 
     }
 }
