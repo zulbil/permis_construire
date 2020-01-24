@@ -31,3 +31,4 @@ label.error {
     justify-content: center;
     align-items: center;
 }
+.flex { display: flex; }

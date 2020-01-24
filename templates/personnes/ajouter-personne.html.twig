@@ -21,14 +21,14 @@
                             <h3 class="kt-section__title kt-section__title-sm"></h3>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row forme_juridique">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.forme_juridique)}}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.forme_juridique) }}
                         </div>
                     </div>
                     <div class="morales-class">
-                        <div class="form-group row">
+                        <div class="form-group row numero_registre_commerce">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.numero_registre_commerce) }}</label>
                             <div class="col-lg-4 col-xl-4">
                                 {{ form_widget(form.numero_registre_commerce) }}
@@ -38,85 +38,85 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row nif">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.nif) }}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.nif) }}
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row nom">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.nom)}}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.nom) }}
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row postnom">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.postnom)}}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.postnom) }}
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row prenom">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.prenom)}}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.prenom) }}
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row telephone">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.telephone) }}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.telephone) }}
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row email">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.email) }}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.email) }}
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row adresse">
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.adresse) }}</label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.adresse) }}
                         </div>
                         {# <div class="col-xl-1"> #}
-                            <button class="btn btn-brand btn-elevate open-adress">
-                                <i class="flaticon-home-2"></i>
-                            </button>
+                        <button class="btn btn-brand btn-elevate open-adress">
+                            <i class="flaticon-home-2"></i>
+                        </button>
                         {# </div> #}
                     </div>
                     <div class="physiques-class">
-                        <div class="form-group row">
+                        <div class="form-group row sexe">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.sexe) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.sexe) }}
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row etat_civil">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.etat_civil) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.etat_civil) }}
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row lieu_de_naissance">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.lieu_de_naissance) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.lieu_de_naissance) }}
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row date_de_naissance">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.date_de_naissance) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.date_de_naissance) }}
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row nationalite">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.nationalite) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.nationalite) }}
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row profession">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.profession) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.profession) }}
@@ -124,17 +124,31 @@
                         </div>
                     </div>
                     <div class="morales-class">
-                        <div class="form-group row">
+                        <div class="form-group row secteur_activites">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.secteur_activites) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.secteur_activites) }}
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row numero_id_nationale">
                             <label class="col-xl-3 col-lg-3 col-form-label">{{ form_label(form.numero_id_nationale) }}</label>
                             <div class="col-lg-9 col-xl-6">
                                 {{ form_widget(form.numero_id_nationale) }}
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <div class="col-xl-9 col-lg-9">
+                            <hr>
+                            <div class="mb-4 text-right">
+                                <button type="button" class="btn btn-bold btn-brand open-adress">Ajouter d'autres adresses</button>
+                            </div>
+
+                            <table class="table table-bordered" id="liste-adreses">
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -190,6 +204,15 @@
                             </div>
                             <div class="spinner-grow text-primary" role="status">
                                 <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger fade hidden" role="alert">
+                            <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+                            <div class="alert-text">A simple danger alert—check it out!</div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                                </button>
                             </div>
                         </div>
                         <div class="navigation">

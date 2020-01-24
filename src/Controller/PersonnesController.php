@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Activite;
 use App\Entity\Adresse;
+use App\Entity\Fonction;
 use App\Entity\Personne;
 use App\Entity\TTypeterritorial;
 use App\Entity\TEntiteAdministrative;
@@ -28,6 +30,7 @@ use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class PersonnesController
@@ -214,11 +217,88 @@ class PersonnesController extends AbstractController
         }
 
         $data['form']           =   $form->createView();
-        //$data['form_adress']    =   $form_adresse->createView(); 
+        //$data['form_adress']    =   $form_adresse->createView();
 
         return $this->render('personnes/ajouter-personne.html.twig', $data );
     }
 
+    /**
+     * @param Request $request
+     * @Route("/personne/ajouter/ajax", name="ajouter_personne_ajax")
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
+     */
+    public function addAjaxPersonne(Request $request, ValidatorInterface $validator) {
+        $formulaire =   $request->request->get('formulaire');
+
+        $personne   =   new Personne();
+
+        $personne->setUtilisateur($this->user);
+        $personne->setEtat(1);
+
+        if ($formulaire['forme_juridique'] === 'morale') {
+            $personne->setNumeroRegistreCommerce($formulaire['registre_de_commerce']);
+            $personne->setNumeroIdNationale($formulaire['numero_id_nationale']);
+            $activite = $this->entityManager->getRepository(Activite::class)->find($formulaire['secteur_activites']);
+            $personne->setSecteurActivites($activite);
+        } else {
+            $personne->setSexe($formulaire['sexe']);
+            $personne->setEtatCivil($formulaire['etat_civil']);
+            $personne->setLieuDeNaissance($formulaire['lieu_de_naissance']);
+            $personne->setDateDeNaissance(new \DateTime($formulaire['date_de_naissance']));
+            $personne->setNationalite($formulaire['nationalite']);
+
+            $profession = $this->entityManager->getRepository(Fonction::class)->find($formulaire['profession']);
+            $personne->setProfession($profession);
+        }
+        $personne->setFormeJuridique($formulaire['forme_juridique']);
+        $personne->setNom($formulaire['nom']);
+        $personne->setPostnom($formulaire['postnom']);
+        $personne->setPrenom($formulaire['prenom']);
+        $personne->setNif($formulaire['nif']);
+        $personne->setTelephone($formulaire['telephone']);
+        $personne->setEmail($formulaire['email']);
+        $personne->setAdresse($formulaire['adresse']);
+
+        $errors = $validator->validate($personne);
+
+        if (count($errors) > 0) {
+
+            $message = $this->formatMessageError($errors);
+
+            return $this->json(['success' => false, 'errors' => $message ]);
+        }
+
+        if (isset($formulaire['adresses']) && $formulaire['adresses'] && count($formulaire['adresses']) > 0) {
+            $adresses = $formulaire['adresse'];
+            $this->registerAdresses($adresses, $personne);
+        }
+
+        $this->entityManager->persist($personne);
+        $this->entityManager->flush();
+
+        return $this->json(['success' => true ]);
+    }
+
+    public function registerAdresses ($adresses, $personne) {
+        $this->entityManager->persist($personne);
+        foreach($adresses as $adresse) {
+            $new_adresse        =   new Adresse();
+
+            $new_adresse->setEtat(1);
+            $new_adresse->setParDefaut((int)$adresse['par_defaut']);
+            $new_adresse->setAdresseComplete($adresse['adresse_complete']);
+            $new_adresse->setNumero($adresse['numero']);
+            $fk_entite = $adresse['fk_entite'];
+            $entite_admin = $this->entityManager->getRepository(TEntiteAdministrative::class)->find($fk_entite);
+            $new_adresse->setFkEntite($entite_admin);
+            $new_adresse->addPersonne($personne);
+            $this->entityManager->persist($new_adresse);
+        }
+        $this->entityManager->flush();
+
+        return $this->json(['success' => true ]);
+    }
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
@@ -304,6 +384,8 @@ class PersonnesController extends AbstractController
 
         $data   =   array();
 
+        $data['adresses']   =   $personne->getAdresses();
+
         $form   = $this->createForm(PersonneType::class, $personne);
 
         if ($adresse) {
@@ -334,8 +416,8 @@ class PersonnesController extends AbstractController
                 $adresse_obj->setParDefaut(1);
                 $adresse_obj->setAdresseComplete($form->get('adresse')->getData());
                 $adresse_obj->setNumero($form->get('numero')->getData());
-                $fk_entite = $form->get('fk_entite')->getData();
-                $entite_admin = $this->entityManager->getRepository(TEntiteAdministrative::class)->find($fk_entite);
+                $fk_entite      = $form->get('fk_entite')->getData();
+                $entite_admin   = $this->entityManager->getRepository(TEntiteAdministrative::class)->find($fk_entite);
                 $adresse_obj->setFkEntite($entite_admin);
                 $adresse_to_register = $adresse_obj;
             } else {
@@ -440,8 +522,7 @@ class PersonnesController extends AbstractController
             $object_entitie['typeentite_mere'] = isset($entite_mere) ? $entite_mere->getFkTypeentite()->getIntituletypeentite() : ""; 
 
                                                 
-            array_push($entites_array, $object_entitie); 
-            
+            array_push($entites_array, $object_entitie);
         }                    
         
         return $this->json(['search' => $search, 'id_territorial' => $id_territorial, 'entites' => $entites_array ]);
@@ -717,5 +798,27 @@ class PersonnesController extends AbstractController
         $new_adresse->setFkEntite($entite_admin);
         //$new_adresse->addPersonne();
 
+    }
+
+    /**
+     * @param $errors
+     * @return array
+     * Cette fonction est utilisée pour formatter les messages d'erreurs lors de la validation d'un object
+     */
+    public function formatMessageError($errors) {
+
+        $errorsString = (string) $errors;
+
+        $validation = explode('.', $errorsString);
+        $validation = explode(':', $validation[1]);
+
+        list($message, $object_error) = explode('(', $validation[1]);
+
+        $validation_message = array (
+            'field'     =>  $validation[0],
+            'message'   =>  trim($message)
+        );
+
+        return $validation_message;
     }
 }

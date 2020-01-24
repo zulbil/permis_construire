@@ -131,6 +131,14 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">Autres adresses</label>
+                        <div class="col-lg-9 col-xl-6">
+                        {% if adresses %}
+                            <p> {{ adresses|length }} adresse </p>
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label"></label>
                         <div class="col-lg-9 col-xl-6">
                             {{ form_widget(form.save) }}

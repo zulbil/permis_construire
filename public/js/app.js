@@ -721,327 +721,411 @@
         }
     }
     $(document).ready(function (){
-        if ($('#personne_telephone').length) {
-            var input = document.querySelector("#personne_telephone");
-            window.intlTelInput(input, {
-                preferredCountries: ['cd'],
-                utilsScript: "node_modules/intl-tel-input/build/js/utils.js"
+            if ($('#personne_telephone').length) {
+                var input = document.querySelector("#personne_telephone");
+                window.intlTelInput(input, {
+                    preferredCountries: ['cd'],
+                    utilsScript: "node_modules/intl-tel-input/build/js/utils.js"
+                });
+            }
+            $('#personne_physique_save, #personne_morale_save').on('click', function (event) {
+                $(this).addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
             });
-        }
-        $('#personne_physique_save, #personne_morale_save').on('click', function (event) {
-            $(this).addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
-        });
-        $('.edit-btn').on('click', function (){
-            if ($('.add-fonction').length) {
+            $('.edit-btn').on('click', function (){
+                if ($('.add-fonction').length) {
 
-                $('.add-fonction').hide();
-                $('.edit-fonction').show();
+                    $('.add-fonction').hide();
+                    $('.edit-fonction').show();
 
-                var id     = $(this).data('id');
-                var nom    = $(this).data('nom');
+                    var id     = $(this).data('id');
+                    var nom    = $(this).data('nom');
 
-                $('.edit-fonction').find('#fonction_nom').val(nom);
-                $('.edit-fonction').find('#fonction_id_fonction').val(id);
-            }
+                    $('.edit-fonction').find('#fonction_nom').val(nom);
+                    $('.edit-fonction').find('#fonction_id_fonction').val(id);
+                }
 
-            if ($('.add-activite').length) {
-                $('.add-activite').hide();
-                $('.edit-activite').show();
+                if ($('.add-activite').length) {
+                    $('.add-activite').hide();
+                    $('.edit-activite').show();
 
-                var id     = $(this).data('id');
-                var nom    = $(this).data('nom');
+                    var id     = $(this).data('id');
+                    var nom    = $(this).data('nom');
 
-                $('.edit-activite').find('#activite_nom').val(nom);
-                $('.edit-activite').find('#activite_id_activite').val(id);
-            }
-        });
-        $('#fonction_reset').on('click', function (){
-            $('.add-fonction').show();
-            $('.edit-fonction').hide();
-        });
-        $('#activite_reset').on('click', function () {
-            $('.add-activite').show();
-            $('.edit-activite').hide();
-        })
-        $('.btn-remove').on('click', function (){
-            var id_fonction =   $(this).data('id');
-            var url         =   "/admin/fonctions/remove/"+id_fonction;
-            var self = $(this);
-            //$(this).parents('tr').remove();
-            bootbox.confirm({
-                message: "Etes vous sûre de vouloir supprimer cette fonction",
-                buttons: {
-                    confirm: {
-                        label: 'Oui',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Non',
-                        className: 'btn-danger'
-                    }
-                },
-                callback: function (result) {
-                    if ( result ) {
-                        $.ajax({
-                            method: "GET",
-                            url: url
-                        }).done(function( msg ) {
-                            if (msg.deleted) {
-                                self.parents('tr').remove();
-                                toastr.success("Cette fonction a été supprimé");
-                            }
-                        });
-                    }
+                    $('.edit-activite').find('#activite_nom').val(nom);
+                    $('.edit-activite').find('#activite_id_activite').val(id);
                 }
             });
-        });
-
-        $('.btn-remove-physique').on('click', function (){
-            var id          =   $(this).data('personne-id');
-            var url         =   "/personnes/physiques/supprimer/"+id;
-            var self        = $(this);
-            //$(this).parents('tr').remove();
-            bootbox.confirm({
-                message: "Etes vous sûre de vouloir supprimer cette personne",
-                buttons: {
-                    confirm: {
-                        label: 'Oui',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Non',
-                        className: 'btn-danger'
-                    }
-                },
-                callback: function (result) {
-                    if ( result ) {
-                        $.ajax({
-                            method: "GET",
-                            url: url
-                        }).done(function( msg ) {
-                            if (msg.deleted) {
-                                self.parents('tr').remove();
-                                toastr.success("Cette personne a été supprimé");
-                            }
-                        });
-                    }
-                }
+            $('#fonction_reset').on('click', function (){
+                $('.add-fonction').show();
+                $('.edit-fonction').hide();
             });
-        });
+            $('#activite_reset').on('click', function () {
+                $('.add-activite').show();
+                $('.edit-activite').hide();
+            })
+            $('.btn-remove').on('click', function (){
+                var id_fonction =   $(this).data('id');
+                var url         =   "/admin/fonctions/remove/"+id_fonction;
+                var self = $(this);
+                //$(this).parents('tr').remove();
+                bootbox.confirm({
+                    message: "Etes vous sûre de vouloir supprimer cette fonction",
+                    buttons: {
+                        confirm: {
+                            label: 'Oui',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Non',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result ) {
+                            $.ajax({
+                                method: "GET",
+                                url: url
+                            }).done(function( msg ) {
+                                if (msg.deleted) {
+                                    self.parents('tr').remove();
+                                    toastr.success("Cette fonction a été supprimé");
+                                }
+                            });
+                        }
+                    }
+                });
+            });
 
-        if( $('#kt_datatable').length ) {
-            if ($('#kt_datatable').hasClass("admin-list")) {
+            $('.btn-remove-physique').on('click', function (){
+                var id          =   $(this).data('personne-id');
+                var url         =   "/personnes/physiques/supprimer/"+id;
+                var self        = $(this);
+                //$(this).parents('tr').remove();
+                bootbox.confirm({
+                    message: "Etes vous sûre de vouloir supprimer cette personne",
+                    buttons: {
+                        confirm: {
+                            label: 'Oui',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Non',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result ) {
+                            $.ajax({
+                                method: "GET",
+                                url: url
+                            }).done(function( msg ) {
+                                if (msg.deleted) {
+                                    self.parents('tr').remove();
+                                    toastr.success("Cette personne a été supprimé");
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            if( $('#kt_datatable').length ) {
+                if ($('#kt_datatable').hasClass("admin-list")) {
+                    setTimeout(function () {
+                        KTDatatableRemoteAjaxDemo.init(true);
+                    }, 1500);
+                }
                 setTimeout(function () {
-                    KTDatatableRemoteAjaxDemo.init(true);
+                    KTDatatableRemoteAjaxDemo.init();
                 }, 1500);
             }
-            setTimeout(function () {
-                KTDatatableRemoteAjaxDemo.init();
-            }, 1500);
-        }
-        var initCalendar = $('#personne_date_de_naissance').length && $('#personne_date_de_naissance').datepicker({ format: "yyyy-m-d" });
+            var initCalendar = $('#personne_date_de_naissance').length && $('#personne_date_de_naissance').datepicker({ format: "yyyy-m-d" });
 
-        if($('#personne_forme_juridique').length) {
-            var type_form = localStorage.getItem('type');
-            if (type_form == 'physique') {
-                $('.physiques-class').show();
-                $('.morales-class').hide();
-            } else {
-                $('.physiques-class').hide();
-                $('.morales-class').show();
-            }
-            $('#personne_forme_juridique').on('change', function (event) {
-                var type  =   $(this).val();
-                localStorage.setItem('type', type);
-                if (type == 'physique') {
+            if($('#personne_forme_juridique').length) {
+                var type_form = localStorage.getItem('type');
+                if (type_form == 'physique') {
                     $('.physiques-class').show();
                     $('.morales-class').hide();
                 } else {
                     $('.physiques-class').hide();
                     $('.morales-class').show();
                 }
-            })
+                $('#personne_forme_juridique').on('change', function (event) {
+                    var type  =   $(this).val();
+                    localStorage.setItem('type', type);
+                    if (type == 'physique') {
+                        $('.physiques-class').show();
+                        $('.morales-class').hide();
+                    } else {
+                        $('.physiques-class').hide();
+                        $('.morales-class').show();
+                    }
+                })
 
-            if($('#personne_forme_juridique').val() == 'physique') {
-                $('.physiques-class').show();
-                $('.morales-class').hide();
-            } else {
-                $('.physiques-class').hide();
-                $('.morales-class').show();
+                if($('#personne_forme_juridique').val() == 'physique') {
+                    $('.physiques-class').show();
+                    $('.morales-class').hide();
+                } else {
+                    $('.physiques-class').hide();
+                    $('.morales-class').show();
+                }
             }
-        }
 
-        if($('.ajouter-personne').length) {
-            $('.btn-check-nrc').on("click", function () {
-                var self = $(this);
-                $(this).addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
-                var nrc = $('#personne_numero_registre_commerce').val();
-                $.ajax({
-                    method: "GET",
-                    url: "/personne/check/nrc/"+nrc
-                }).done(function( msg ) {
+            if($('.ajouter-personne').length) {
+                $('.btn-check-nrc').on("click", function () {
+                    var self = $(this);
+                    $(this).addClass('kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light');
+                    var nrc = $('#personne_numero_registre_commerce').val();
+                    $.ajax({
+                        method: "GET",
+                        url: "/personne/check/nrc/"+nrc
+                    }).done(function( msg ) {
 
-                    self.removeClass("kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light");
-                });
-            })
-        }
-        if ($('#liste_activites').length) {
-            $('#liste_activites').DataTable({
-                "language": {
-                    "lengthMenu": "Afficher _MENU_ activités par page",
-                    "zeroRecords": "Aucun agent trouvé",
-                    "info": " Page _PAGE_ / _PAGES_",
-                    "infoEmpty": "Pas d'activité trouvé",
-                    "infoFiltered": "(filtrer sur _MAX_ total agents)"
-                }
-            });
-        }
-        $('.open-adress').on('click', function (event){
-            event.preventDefault(); 
-            var options = ``;
-
-            $('.loader').addClass('flex-class');
-            if (!$('select#form_origine option').length) {
-                $.ajax({
-                    method: "GET",
-                    url: "/personne/adresse/type_territorial"
-                }).done(function( msg ) {
-                    var allOptions = msg.types; 
-                    
-                    $.each(allOptions, function(index, item) { 
-                        options += `<option value="${item.idtypeterritorial}">${item.intituleterritorial}</option>`;
-                    }); 
-                    $('select#form_origine').append(options); 
-                });
+                        self.removeClass("kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light");
+                    });
+                })
             }
-            setTimeout(function(){
-                $('.loader').removeClass('flex-class');
-                $('#adresse').modal();
-            }, 1500); 
-        }); 
-
-        const resetTab = function () {
-            $('div.navigation .nav').empty(); 
-            $('#kt_tabs_7_1').addClass('active'); 
-            $('#kt_tabs_7_2').removeClass('active'); 
-            $('#datatable').css('display', 'none'); 
-        }
-
-        const capitalize = function (word) {
-            return word.charAt(0).toUpperCase() + word.slice(1);
-        }
-
-        $('.search-btn').on('click', function (event){
-            event.preventDefault(); 
-            var search = $('input[name="entite"]'); 
-            if (!search.val()) {
-                search.addClass('is-invalid'); 
-                $('.search-feedback').css('display', 'block !important');
-                return; 
-            }
-            search.removeClass('is-invalid'); 
-            $('.search-feedback').css('display', 'none !important');
-            resetTab(); 
-
-            $('.loader-search').removeClass('hidden'); 
-
-            var search              = $("input[name='entite']").val();
-            var idtypeterritorial   = $('select#form_origine').val();  
-
-            $.ajax({
-                method: "POST",
-                url: "/personne/adresse/entite_administratives", 
-                data : {
-                    'search': search, 
-                    'type_territorial': idtypeterritorial
-                }
-            }).done(function( msg ) { 
-                if (!$('.nav-link.territorial').length) {
-                    var li = `
-                        <li class="nav-item">
-                            <a class="nav-link territorial active" data-toggle="tab" href="#kt_tabs_7_1" role="tab" aria-selected="true">
-                                Territorial
-                            </a>
-                        </li>
-                    `; 
-                    $('.navigation ul').append(li); 
-                }
-
-                $("#datatable").KTDatatable("destroy"); 
-                KTDatatableJsonRemoteDemo.init(msg);
-                $('.loader-search').addClass('hidden');
-            });
-        });
-
-        $('.btn-add-entite').on('click', function (event){
-            event.preventDefault();
-            $('#add-entite').modal();
-        });
-
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            console.log(e.target); // newly activated tab
-            console.log(e.relatedTarget);  // previous active tab
-        });
-
-        if ($('#territorial-form').length) {
-            $('#territorial-form').validate({
-                messages: {
-                    province : "Ce champ est obligatoire",
-                    territoire : "Ce champ est obligatoire",
-                    ville: "Ce champ est obligatoire",
-                    cité: "Ce champ est obligatoire",
-                    secteur: "Ce champ est obligatoire",
-                    village: "Ce champ est obligatoire",
-                    commune: "Ce champ est obligatoire",
-                    quartier: "Ce champ est obligatoire",
-                    avenue: "Ce champ est obligatoire",
-                    numero: "Ce champ est obligatoire"
-                }
-            });
-        }
-
-        $('.btn-valid').on('click', function (event){
-            event.preventDefault();
-
-            const isValid   =   $('#territorial-form').valid();
-
-            if ( isValid ) {
-
-                const adresses_fields = JSON.parse(localStorage.getItem('fields'));
-                let full_adress = '';
-                let data        = new Object();
-                const prop      = adresses_fields[adresses_fields.length - 1];
-
-                $.each(adresses_fields, function (index, item) {
-                    const select = document.getElementById(item);
-                    const option = select.options[select.selectedIndex] ? select.options[select.selectedIndex] : "";
-                    full_adress += `${capitalize(item)} ${option.text}, `;
-                    if (prop == item) {
-                        data["fk_entite"] = option.value;
+            if ($('#liste_activites').length) {
+                $('#liste_activites').DataTable({
+                    "language": {
+                        "lengthMenu": "Afficher _MENU_ activités par page",
+                        "zeroRecords": "Aucun agent trouvé",
+                        "info": " Page _PAGE_ / _PAGES_",
+                        "infoEmpty": "Pas d'activité trouvé",
+                        "infoFiltered": "(filtrer sur _MAX_ total agents)"
                     }
                 });
+            }
+            $('.open-adress').on('click', function (event){
+                event.preventDefault();
+                var options = ``;
 
-                if ($('input[name="numero"]').length) {
-                    const number = $('input[name="numero"]').val();
-                    full_adress += `Numero ${number}`;
-                    data["numero"]  = number;
-                    $('#personne_numero').val(data["numero"]);
-                } else {
-                    full_adress = full_adress.substr(0, full_adress.length-2);
+                $('.loader').addClass('flex-class');
+                if (!$('select#form_origine option').length) {
+                    $.ajax({
+                        method: "GET",
+                        url: "/personne/adresse/type_territorial"
+                    }).done(function( msg ) {
+                        var allOptions = msg.types;
+
+                        $.each(allOptions, function(index, item) {
+                            options += `<option value="${item.idtypeterritorial}">${item.intituleterritorial}</option>`;
+                        });
+                        $('select#form_origine').append(options);
+                    });
                 }
-                data["adresse_complete"] = full_adress;
+                setTimeout(function(){
+                    $('.loader').removeClass('flex-class');
+                    $('#adresse').modal();
+                }, 1500);
+            });
 
-                $('#personne_adresse').val(full_adress);
-                $('#personne_fk_entite').val(data["fk_entite"]);
-
-                resetTab();
-
-                $('.loader').removeClass('flex-class');
-
-                $('#adresse').modal('hide');
+            const resetTab = function () {
+                $('div.navigation .nav').empty();
+                $('#kt_tabs_7_1').addClass('active');
+                $('#kt_tabs_7_2').removeClass('active');
+                $('#datatable').css('display', 'none');
+                $('#adresse .modal-footer .btn-valid').addClass('hidden');
+                //document.querySelector('.origine-form').reset();
             }
 
-        });
-         
+            const capitalize = function (word) {
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }
+
+            $('.search-btn').on('click', function (event){
+                event.preventDefault();
+                var search = $('input[name="entite"]');
+                if (!search.val()) {
+                    search.addClass('is-invalid');
+                    $('.search-feedback').css('display', 'block !important');
+                    return;
+                }
+                search.removeClass('is-invalid');
+                $('.search-feedback').css('display', 'none !important');
+                resetTab();
+
+                $('.loader-search').removeClass('hidden');
+
+                var search              = $("input[name='entite']").val();
+                var idtypeterritorial   = $('select#form_origine').val();
+
+                console.log(search);
+
+                $.ajax({
+                    method: "POST",
+                    url: "/personne/adresse/entite_administratives",
+                    data : {
+                        'search': search,
+                        'type_territorial': idtypeterritorial
+                    }
+                }).done(function( msg ) {
+                    if (!$('.nav-link.territorial').length) {
+                        var li = `
+                            <li class="nav-item">
+                                <a class="nav-link territorial active" data-toggle="tab" href="#kt_tabs_7_1" role="tab" aria-selected="true">
+                                    Territorial
+                                </a>
+                            </li>
+                        `;
+                        $('.navigation ul').append(li);
+                    }
+
+                    $("#datatable").KTDatatable("destroy");
+                    KTDatatableJsonRemoteDemo.init(msg);
+                    $('.loader-search').addClass('hidden');
+                }).fail(function( jqXHR, textStatus ){
+                    $('.loader-search').addClass('hidden');
+                    const message = `Une erreur de type ${jqXHR.status} s'est produite. Veuillez réessayer ultérieurement`;
+                    $('.detail-container .alert-danger .alert-text').html(message);
+                    $('.detail-container .alert-danger').removeClass('hidden');
+                    $('.detail-container .alert-danger').removeClass('fade');
+                });
+            });
+
+            $('.btn-add-entite').on('click', function (event){
+                event.preventDefault();
+                $('#add-entite').modal();
+            });
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                console.log(e.target); // newly activated tab
+                console.log(e.relatedTarget);  // previous active tab
+            });
+
+            if ($('#territorial-form').length) {
+                $('#territorial-form').validate({
+                    messages: {
+                        province : "Ce champ est obligatoire",
+                        territoire : "Ce champ est obligatoire",
+                        ville: "Ce champ est obligatoire",
+                        cité: "Ce champ est obligatoire",
+                        secteur: "Ce champ est obligatoire",
+                        village: "Ce champ est obligatoire",
+                        commune: "Ce champ est obligatoire",
+                        quartier: "Ce champ est obligatoire",
+                        avenue: "Ce champ est obligatoire",
+                        numero: "Ce champ est obligatoire"
+                    }
+                });
+            }
+            // Iniitialize entites List
+            let entites = [];
+
+            $('.btn-valid').on('click', function (event){
+                event.preventDefault();
+
+                const isValid   =   $('#territorial-form').valid();
+
+                if ( isValid ) {
+
+                    const adresses_fields = JSON.parse(localStorage.getItem('fields'));
+                    let full_adress = '';
+                    let data        = new Object();
+                    const prop      = adresses_fields[adresses_fields.length - 1];
+
+                    $.each(adresses_fields, function (index, item) {
+                        const select = document.getElementById(item);
+                        const option = select.options[select.selectedIndex] ? select.options[select.selectedIndex] : "";
+                        full_adress += `${capitalize(item)} ${option.text}, `;
+                        if (prop == item) { data["fk_entite"] = option.value; }
+                    });
+                    data["numero"] = "";
+                    if ($('input[name="numero"]').length) {
+                        const number = $('input[name="numero"]').val();
+                        full_adress += `Numero ${number}`;
+                        data["numero"]  = number;
+                        $('#personne_numero').val(data["numero"]);
+                    } else {
+                        full_adress = full_adress.substr(0, full_adress.length-2);
+                    }
+                    data["adresse_complete"] = full_adress;
+                    data["par_defaut"] = 0;
+                    if (entites.length == 0) {
+                        data["par_defaut"] = 1;
+                    }
+
+                    entites.push(data);
+
+                    console.log(entites);
+                    //localStorage.setItem('entites', JSON.stringify(entites));
+
+                    $('#personne_adresse').val(full_adress);
+                    $('#personne_fk_entite').val(data["fk_entite"]);
+
+                    resetTab();
+
+                    $('.loader').removeClass('flex-class');
+
+                    $('#adresse').modal('hide');
+                    let tr = '';
+                    $.each(entites, function (index, item) {
+                        tr += `
+                            <tr>
+                                <td> ${item.adresse_complete} </td>
+                                <td>
+                                    <a title="Activer comme principale"  id="btn-enable-adress" class="btn btn-brand btn-elevate btn-pill" href="#">
+                                        <i class="la la-check-circle no-padding"></i>
+                                    </a>
+                                    <a title="Supprimer cet adresse"  id="btn-remove-adress" class="btn btn-danger btn-elevate btn-pill" href="#">
+                                        <i class="la la-trash no-padding"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    $('#liste-adreses tbody').html('');
+                    $('#liste-adreses tbody').append(tr);
+                }
+
+            });
+
+            $('.ajouter-personne').on('submit', function (event){
+                event.preventDefault();
+                // Intialize data to send on the server
+                let formulaire  = {
+                    forme_juridique         : $('select#personne_forme_juridique').val(),
+                    registre_de_commerce    : $('input#personne_numero_registre_commerce').val(),
+                    nif                     : $('input#personne_nif').val(),
+                    nom                     : $('input#personne_nom').val(),
+                    postnom                 : $('input#personne_postnom').val(),
+                    prenom                  : $('input#personne_prenom').val(),
+                    telephone               : $('#personne_telephone').val(),
+                    adresse                 : $('#personne_adresse').val(),
+                    sexe                    : $('select#personne_sexe').val(),
+                    etat_civil              : $('select#personne_etat_civil').val(),
+                    email                   : $('input#personne_email').val(),
+                    secteur_activites       : $('select#personne_secteur_activites').val(),
+                    numero_id_nationale     : $('input#personne_numero_id_nationale').val(),
+                    lieu_de_naissance       : $('input#personne_lieu_de_naissance').val(),
+                    date_de_naissance       : $('input#personne_date_de_naissance').val(),
+                    nationalite             : $('select#personne_nationalite').val(),
+                    profession              : $('select#personne_profession').val(),
+                    adresses                : entites
+                };
+                // Remove all message error
+                $('.invalid-feedback').remove();
+                if ($('.form-control').hasClass('is-invalid')) {
+                    $('.form-control').removeClass('is-invalid');
+                }
+                // Send an ajax request to the server
+                $.ajax({
+                    method: 'POST',
+                    url: '/personne/ajouter/ajax',
+                    data: { formulaire }
+                }).done(function (message) {
+                    // If some error validation occurs print it to the ui
+                        if (!message.success) {
+                            const field = message.errors.field;
+                            const error_message = message.errors.message;
+                            const invalid_feedback = `<div class="invalid-feedback"> <span class="badge badge-danger">Erreur </span> ${error_message} </div>`;
+                            $(`#personne_${field}`).addClass('is-invalid');
+                            $(`#personne_${field}`).after(invalid_feedback);
+                        }
+                }).fail(function (jhqr, textstatus){
+                    swal.fire("Oups!","Une erreur s'est produite dans le serveur","error");
+                })
+            })
+
     });
 })(jQuery)

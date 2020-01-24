@@ -6,13 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Personne
  * @ORM\Entity(repositoryClass="App\Repository\PersonneRepository")
  * @ORM\Table(name="personne", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_FCEC9EF450FF010", columns={"telephone"}), @ORM\UniqueConstraint(name="UNIQ_FCEC9EFE7927C74", columns={"email"}), @ORM\UniqueConstraint(name="UNIQ_FCEC9EFADE62BBB", columns={"nif"})}, indexes={@ORM\Index(name="IDX_FCEC9EFFDEF8996", columns={"profession_id"}), @ORM\Index(name="IDX_FCEC9EF532830B5", columns={"secteur_activites_id"}), @ORM\Index(name="IDX_FCEC9EFFB88E14F", columns={"utilisateur_id"})})
  * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet email")
- * @UniqueEntity(fields={"nif"}, message="Ce numéeo d'identification existe déjà")
+ * @UniqueEntity(fields={"nif"}, message="Ce numéro d'identification existe déjà")
  * @UniqueEntity(fields={"telephone"}, message="Ce numéro de téléphone existe déjà")
  * @UniqueEntity(fields={"numeroIdNationale"}, message="Ce numéro d'identification nationale existe déjà")
  * @UniqueEntity(fields={"numeroRegistreCommerce"}, message="Ce numéro de registre de commerce existe déjà")
@@ -30,6 +31,7 @@ class Personne
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message= "Ce chanmp ne peut être vide")
      */
     private $nom;
 
@@ -37,6 +39,7 @@ class Personne
      * @var string|null
      *
      * @ORM\Column(name="postnom", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message= "Ce chanmp ne peut être vide")
      */
     private $postnom;
 
@@ -44,6 +47,7 @@ class Personne
      * @var string|null
      *
      * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message= "Ce champ ne peut être vide")
      */
     private $prenom;
 
@@ -58,6 +62,7 @@ class Personne
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message= "Ce champ ne peut être vide")
      */
     private $adresse;
 

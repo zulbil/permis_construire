@@ -62,6 +62,7 @@ class PersonneType extends AbstractType
                     ])
                 ]
             ])
+            ->add('liste_adresse', HiddenType::class, [ 'mapped' => false ])
             ->add('fk_entite', HiddenType::class, ['mapped' => false ])
             ->add('numero', HiddenType::class, ['mapped' => false ])
             ->add('etat_civil',  ChoiceType::class, [
