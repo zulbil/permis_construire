@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="kt-portlet__body">
-            {{ form_start(form, {'attr': {'class': 'kt-form kt-form--label-right', 'novalidate': 'novalidate' }} ) }}
+            {{ form_start(form, {'attr': {'class': 'kt-form kt-form--label-right editer-personne', 'novalidate': 'novalidate' }} ) }}
                 <div class="kt-section kt-section--first">
                 <div class="kt-section__body">
                     <div class="row">
@@ -130,12 +130,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">Autres adresses</label>
-                        <div class="col-lg-9 col-xl-6">
-                        {% if adresses %}
-                            <p> {{ adresses|length }} adresse </p>
-                        {% endif %}
+                    <div class="form-group row justify-content-center">
+                        <div class="col-xl-9 col-lg-9">
+                            <hr>
+                            <div class="mb-4 text-right">
+                                <button type="button" class="btn btn-bold btn-brand open-adress">Ajouter d'autres adresses</button>
+                            </div>
+                            {% if adresses|length > 0 %}
+                                <table class="table table-bordered" id="liste-adreses">
+                                    <tbody>
+                                        {% for adresse in adresses  %}
+                                            {% set main = (adresse.par_defaut == 1) ? 'main-adresse' : '' %}
+                                            <tr class="{{ main }}" data-id="{{ adresse.id }}" data-entite="{{ adresse.fk_entite.identite }}" data-numero="{{ adresse.numero }}" data-defaut="{{ adresse.par_defaut }}">
+                                                <td class="adresse_complete">
+                                                    {{ adresse.adresse_complete  }}
+                                                </td>
+                                                <td>
+                                                    <a title="Activer comme principale"  id="btn-enable-adress" class="btn btn-brand btn-elevate btn-pill" href="javascript::void(0)">
+                                                        <i class="la la-check-circle no-padding"></i>
+                                                    </a>
+                                                    <a title="Supprimer cet adresse"  id="btn-remove-adress" class="btn btn-danger btn-elevate btn-pill" href="javascript::void(0)">
+                                                        <i class="la la-trash no-padding"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div class="text-left"> Vous n'avez aucune adresse </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="form-group row">
@@ -314,3 +338,4 @@
     </div>
 
 {% endblock %}
+

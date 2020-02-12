@@ -227,6 +227,7 @@ class PersonnesController extends AbstractController
      * @Route("/personne/ajouter/ajax", name="ajouter_personne_ajax")
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
     public function addAjaxPersonne(Request $request, ValidatorInterface $validator) {
         $formulaire =   $request->request->get('formulaire');
@@ -270,7 +271,7 @@ class PersonnesController extends AbstractController
         }
 
         if (isset($formulaire['adresses']) && $formulaire['adresses'] && count($formulaire['adresses']) > 0) {
-            $adresses = $formulaire['adresse'];
+            $adresses   =   $formulaire['adresses'];
             $this->registerAdresses($adresses, $personne);
         }
 
@@ -280,6 +281,13 @@ class PersonnesController extends AbstractController
         return $this->json(['success' => true ]);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     * @param $adresses 
+     * @param $personne
+     * Cette fonction permet d'enregistrer les adresses pour une personne
+     */
     public function registerAdresses ($adresses, $personne) {
         $this->entityManager->persist($personne);
         foreach($adresses as $adresse) {
@@ -289,8 +297,8 @@ class PersonnesController extends AbstractController
             $new_adresse->setParDefaut((int)$adresse['par_defaut']);
             $new_adresse->setAdresseComplete($adresse['adresse_complete']);
             $new_adresse->setNumero($adresse['numero']);
-            $fk_entite = $adresse['fk_entite'];
-            $entite_admin = $this->entityManager->getRepository(TEntiteAdministrative::class)->find($fk_entite);
+            $fk_entite      = $adresse['fk_entite'];
+            $entite_admin   = $this->entityManager->getRepository(TEntiteAdministrative::class)->find($fk_entite);
             $new_adresse->setFkEntite($entite_admin);
             $new_adresse->addPersonne($personne);
             $this->entityManager->persist($new_adresse);
@@ -299,6 +307,7 @@ class PersonnesController extends AbstractController
 
         return $this->json(['success' => true ]);
     }
+
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface

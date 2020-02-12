@@ -1061,7 +1061,7 @@
                     let tr = '';
                     $.each(entites, function (index, item) {
                         tr += `
-                            <tr>
+                            <tr class="main-adresse" data-entite="${item.fk_entite}" data-numero="${item.numero}" data-defaut="${item.par_defaut}">
                                 <td> ${item.adresse_complete} </td>
                                 <td>
                                     <a title="Activer comme principale"  id="btn-enable-adress" class="btn btn-brand btn-elevate btn-pill" href="#">
@@ -1121,11 +1121,100 @@
                             const invalid_feedback = `<div class="invalid-feedback"> <span class="badge badge-danger">Erreur </span> ${error_message} </div>`;
                             $(`#personne_${field}`).addClass('is-invalid');
                             $(`#personne_${field}`).after(invalid_feedback);
+                        } else {
+                            swal.fire("Opération réussie","L'ajout de la personne a été effectué avec succès","success");
+                            setTimeout(function(){
+                                window.location.href = "/personnes";
+                            }, 1000)
                         }
                 }).fail(function (jhqr, textstatus){
                     swal.fire("Oups!","Une erreur s'est produite dans le serveur","error");
                 })
-            })
+            });
+
+            const buildEntitesObject = function () {
+                let entites = [];
+                $.each('#liste-adreses tr', function (index, item) {
+                    let data;
+                    /*data.par_defaut     =   item.par_defaut;
+                    data.fk_entite      =   item.fk_entite;
+                    data.numero         =   item.numero;
+                    data.id             =   item.id; */
+                    console.log($(this));
+                })
+            }
+
+            $('#liste-adreses').on('click', '#btn-remove-adress', function (event){
+                event.preventDefault();
+                const self = $(this);
+                bootbox.confirm({
+                    message: "Etes vous sûre de vouloir supprimer cette adresse",
+                    buttons: {
+                        confirm: {
+                            label: 'Oui',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Non',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result ) {
+                            // $.ajax({
+                            //     method: "GET",
+                            //     url: url
+                            // }).done(function( msg ) {
+                            //     if (msg.deleted) {
+                            //         self.parents('tr').remove();
+                            //         toastr.success("Cette personne a été supprimé");
+                            //     }
+                            // });
+                            buildEntitesObject();
+                            self.parents('tr').remove();
+                            toastr.success("Cette adresse a été supprimé");
+                        }
+                    }
+                });
+            });
+
+            $('#liste-adreses').on('click', '#btn-enable-adress', function (event){
+                event.preventDefault();
+                const self = $(this);
+                bootbox.confirm({
+                    message: "Etes vous sûre de vouloir définir cette adresse comme principale",
+                    buttons: {
+                        confirm: {
+                            label: 'Oui',
+                            className: 'btn-success'
+                        },
+                        cancel: {
+                            label: 'Non',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result ) {
+                            // $.ajax({
+                            //     method: "GET",
+                            //     url: url
+                            // }).done(function( msg ) {
+                            //     if (msg.deleted) {
+                            //         self.parents('tr').remove();
+                            //         toastr.success("Cette personne a été supprimé");
+                            //     }
+                            // });
+                            $('#liste-adreses tr').removeClass('main-adresse');
+                            $('#liste-adreses tr').attr('data-defaut', 0);
+                            self.parents('tr').attr('data-defaut', 1);
+                            self.parents('tr').addClass('main-adresse');
+                            toastr.success("Cette adresse a été activé comme principale");
+                        }
+                    }
+                });
+            });
+
+
 
     });
 })(jQuery)

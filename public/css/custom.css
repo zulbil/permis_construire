@@ -32,3 +32,5 @@ label.error {
     align-items: center;
 }
 .flex { display: flex; }
+.main-adresse { background: rgb(226, 239, 226); }
+.main-adresse #btn-enable-adress { display: none; }

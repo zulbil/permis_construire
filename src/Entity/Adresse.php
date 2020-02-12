@@ -33,12 +33,12 @@ class Adresse
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $adresse_complete;
+    public $adresse_complete;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $par_defaut;
+    public $par_defaut;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -56,7 +56,7 @@ class Adresse
      *   @ORM\JoinColumn(name="fk_entite", referencedColumnName="IdEntite")
      * })
      */
-    private $fk_entite;
+    public $fk_entite;
 
     public function __construct()
     {

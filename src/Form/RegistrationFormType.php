@@ -56,7 +56,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'first_options' => [ 'label' => 'Mot de passe', 'attr' => [ 'placeholder' => 'Mot de Passe' ] ],
                 'second_options' => [ 'label' => 'Confirmez votre mot de passe', 'attr' => [ 'placeholder' => 'Confirmez votre mot de passe' ] ]
-            ])
+            ])/*
             ->add('personne', ChoiceType::class, [
                 'label' => 'Créer son compte en tant que',
                 'choices' => [
@@ -64,7 +64,7 @@ class RegistrationFormType extends AbstractType
                     'Personne Morale' => 0
                 ],
                 'attr' => ['class' => 'ml-4' ]
-            ]);
+            ])*/;
     }
 
     public function configureOptions(OptionsResolver $resolver)
