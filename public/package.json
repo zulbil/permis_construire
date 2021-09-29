@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "bootbox": "^5.3.4",
-    "datatables.net": "^1.10.20",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.20",
     "intl-tel-input": "^16.0.8"
   }
